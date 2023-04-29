@@ -19,7 +19,7 @@ namespace CalendarApp.Services
 
         public IEnumerable<DayInfo>? GetData(int month, int year)
         {
-            var days = serializer.Deserialize<JsonModel>();
+            var days = serializer.Deserialize<SerializeModel>(() => File.OpenRead("data.json"));
 
             DateTime min = new DateTime(year, month, 1).Date;
             DateTime max = min.AddMonths(1);
@@ -29,7 +29,7 @@ namespace CalendarApp.Services
 
         internal void SaveData(DayInfo? dayInfo)
         {
-            var data = serializer.Deserialize<JsonModel>() ?? new JsonModel() { DaysInfo = new List<DayInfo>()};
+            var data = serializer.Deserialize<SerializeModel>(() => File.OpenRead("data.json")) ?? new SerializeModel() { DaysInfo = new List<DayInfo>()};
 
             var obj = data.DaysInfo.FirstOrDefault(x => x.Date == dayInfo?.Date);
 
@@ -42,7 +42,7 @@ namespace CalendarApp.Services
                 data.DaysInfo?.Add(dayInfo);
             }
 
-            serializer.Serialize(data);
+            serializer.Serialize(data, () => new FileStream("data.json", FileMode.Create, FileAccess.Write));
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CalendarApp.Models
 {
-    public class JsonModel
+    public class SerializeModel
     {
         public List<DayInfo> DaysInfo { get; set; }
     }

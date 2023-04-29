@@ -1,37 +1,37 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
-using System.Text.Json;
+using System.Windows;
 
 namespace CalendarApp.Services
 {
     internal class JsonSerializerService : DataSerializer
     {
-        public JsonSerializerService(Func<Stream> getter) : base(getter)
-        {
-        }
-
-        public override T? Deserialize<T>(Func<Stream>? streamFunc = null)
+        public override T? Deserialize<T>(Func<Stream> streamFunc)
             where T : class
         {
-            using var stream = streamFunc?.Invoke() ?? streamGetter();
+            using var stream = streamFunc();
             using StreamReader reader = new(stream);
             string json = reader.ReadToEnd();
 
             try
             {
-                return JsonSerializer.Deserialize<T?>(json);
+                return JsonConvert.DeserializeObject<T>(json);
             }
-            catch(Exception ex) { }
+            catch(Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Ошибка чтения json-файла", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
 
             return null;
         }
 
-        public override void Serialize<T>(T data, Func<Stream>? streamFunc = null)
+        public override void Serialize<T>(T data, Func<Stream> writeStream)
             where T : class
         {
-            string json = JsonSerializer.Serialize(data);
-            using var stream = streamFunc?.Invoke() ?? streamGetter();
+            string json = JsonConvert.SerializeObject(data);
+            using var stream = writeStream();
             using StreamWriter writer = new(stream);
             writer.Write(json);
         }

@@ -31,8 +31,7 @@ namespace CalendarApp
 
             services.AddSingleton<PageService>();
             services.AddTransient<DayInfoService>();
-            services.AddTransient<DataSerializer, JsonSerializerService>(x => 
-                new JsonSerializerService(() => new FileStream("data.json", FileMode.OpenOrCreate, FileAccess.ReadWrite)));
+            services.AddTransient<DataSerializer, JsonSerializerService>();
             
             serviceProvider = services.BuildServiceProvider();
         }
