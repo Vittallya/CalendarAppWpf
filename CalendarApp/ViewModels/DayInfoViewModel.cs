@@ -21,9 +21,9 @@ namespace CalendarApp.ViewModels
         public Option[] Options { get; set; } = new Option[]
         {
             new Option{Text = "Турник", Uri = "\\Resources\\Images\\turnik.png"},
-            new Option{Text = "Бегит", Uri = "\\Resources\\Images\\running.png"},
-            new Option{Text = "Анжуманя", Uri = "\\Resources\\Images\\ot.png"},
-            new Option{Text = "Пресс качат", Uri = "\\Resources\\Images\\press.png"}
+            new Option{Text = "Пробежка", Uri = "\\Resources\\Images\\running.png"},
+            new Option{Text = "Отжимания", Uri = "\\Resources\\Images\\ot.png"},
+            new Option{Text = "Упражнения на пресс", Uri = "\\Resources\\Images\\press.png"}
         };
 
         public DayInfoViewModel(PageService pageService, DayInfoService dayInfoService)

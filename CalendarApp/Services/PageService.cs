@@ -7,12 +7,9 @@ namespace CalendarApp.Services
 {
     public class PageService
     {
-        private Stack<Page> _pages = new Stack<Page>();
+        private Stack<Page> _pages = new();
 
-        public event Action<Page>? PageChanged;
-
-        public IEnumerable<Page> PageHistory => _pages;
-
+        public event Action<Page?>? PageChanged;
         public Page? CurrentPage { get; private set; }
 
         public void ChangePage<TPage>(object? data = null)
@@ -47,7 +44,7 @@ namespace CalendarApp.Services
         }
 
 
-        private void OnPageChanged(Page page)
+        private void OnPageChanged(Page? page)
         {
             PageChanged?.Invoke(page);
         }
